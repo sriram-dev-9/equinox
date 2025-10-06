@@ -14,9 +14,10 @@ export const getAuth = async () => {
     if(!db) throw new Error('MongoDB connection not found');
 
     authInstance = betterAuth({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         database: mongodbAdapter(db as any),
         secret: process.env.BETTER_AUTH_SECRET,
-        baseURL: process.env.BETTER_AUTH_URL,
+        baseURL: process.env.BETTER_AUTH_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
         emailAndPassword: {
             enabled: true,
             disableSignUp: false,

@@ -155,7 +155,17 @@ npm run start
 npm run lint
 ```
 
-## 📋 Future Roadmap
+## � Deployment
+
+For detailed deployment instructions (especially for Vercel), see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
+**Quick Deployment Checklist:**
+1. Set up Inngest Cloud account and get API keys
+2. Configure all environment variables in Vercel
+3. **Critical**: Set `BETTER_AUTH_URL` to your production domain
+4. Deploy and verify authentication works
+
+## �📋 Future Roadmap
 
 - [ ] Portfolio simulation and backtesting
 - [ ] Advanced notification system for price alerts
