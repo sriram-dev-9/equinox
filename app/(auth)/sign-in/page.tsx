@@ -4,13 +4,11 @@ import { useForm } from 'react-hook-form';
 import { Button } from '@/components/ui/button';
 import InputField from '@/components/forms/InputField';
 import FooterLink from '@/components/forms/FooterLink';
-import {signInWithEmail, signUpWithEmail} from "@/lib/actions/auth.actions";
+import {signInWithEmail} from "@/lib/actions/auth.actions";
 import {toast} from "sonner";
-import {signInEmail} from "better-auth/api";
-import {useRouter} from "next/navigation";
+import { DEBUG_AUTH } from '@/lib/debug-auth';
 
 const SignIn = () => {
-    const router = useRouter()
     const {
         register,
         handleSubmit,
@@ -25,10 +23,25 @@ const SignIn = () => {
 
     const onSubmit = async (data: SignInFormData) => {
         try {
+            console.log('🔐 Attempting sign in...');
             const result = await signInWithEmail(data);
-            if(result.success) router.push('/dashboard');
+            
+            DEBUG_AUTH.logAuth('sign-in', result.success, result.error);
+            console.log('🔐 Sign in result:', result);
+            
+            if(result.success) {
+                toast.success('Signed in successfully!');
+                console.log('🔐 Redirecting to dashboard...');
+                // Force reload to ensure cookies are set
+                window.location.href = '/dashboard';
+            } else {
+                toast.error('Sign in failed', {
+                    description: result.error || 'Failed to sign in.'
+                });
+            }
         } catch (e) {
-            console.error(e);
+            console.error('🔐 Sign in error:', e);
+            DEBUG_AUTH.logAuth('sign-in', false, e);
             toast.error('Sign in failed', {
                 description: e instanceof Error ? e.message : 'Failed to sign in.'
             })

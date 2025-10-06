@@ -55,15 +55,8 @@ Equinox is an advanced stock market platform that combines real-time market data
    MONGODB_URI=your_mongodb_connection_string
 
    # Authentication (Better Auth)
-   AUTH_SECRET=your_auth_secret
-   AUTH_URL=http://localhost:3000/api/auth
-
-   # Email (Nodemailer)
-   EMAIL_SERVER_HOST=your_smtp_host
-   EMAIL_SERVER_PORT=587
-   EMAIL_SERVER_USER=your_email
-   EMAIL_SERVER_PASSWORD=your_password
-   EMAIL_FROM=your_sender_email
+   BETTER_AUTH_SECRET=your_auth_secret
+   BETTER_AUTH_URL=http://localhost:3000
 
    # API Keys
    FINNHUB_API_KEY=your_finnhub_api_key
@@ -92,8 +85,7 @@ equinox/
 │   ├── (auth)/              # Authentication pages
 │   ├── (root)/              # Root layout
 │   ├── api/                 # API routes
-│   │   ├── chat/           # Chat API
-│   │   └── inngest/        # Background jobs
+│   │   └── chat/           # Chat API
 │   ├── dashboard/          # Main app pages
 │   └── stocks/             # Stock details pages
 ├── components/              # Reusable UI components
@@ -102,8 +94,7 @@ equinox/
 ├── lib/                     # Utility functions and modules
 │   ├── actions/            # Server actions
 │   ├── agent/              # AI agent configuration
-│   ├── better-auth/        # Authentication setup
-│   └── inngest/            # Background processing
+│   └── better-auth/        # Authentication setup
 └── public/                  # Static assets
 ```
 
@@ -115,7 +106,6 @@ equinox/
 - **Authentication**: Better Auth
 - **AI**: Google Gemini 2.0, LangGraph
 - **Data Sources**: Finnhub API, TradingView Widgets
-- **Background Jobs**: Inngest
 - **Web Scraping**: Firecrawl
 
 ## 🧠 AI Features

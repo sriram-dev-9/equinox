@@ -8,11 +8,10 @@ import {INVESTMENT_GOALS, PREFERRED_INDUSTRIES, RISK_TOLERANCE_OPTIONS} from "@/
 import {CountrySelectField} from "@/components/forms/CountrySelectField";
 import FooterLink from "@/components/forms/FooterLink";
 import {signUpWithEmail} from "@/lib/actions/auth.actions";
-import {useRouter} from "next/navigation";
 import {toast} from "sonner";
+import { DEBUG_AUTH } from '@/lib/debug-auth';
 
 const SignUp = () => {
-    const router = useRouter()
     const {
         register,
         handleSubmit,
@@ -31,18 +30,27 @@ const SignUp = () => {
         mode: 'onBlur'
     }, );
 
-    // Define the expected return type for signUpWithEmail
-    type SignUpResult = {
-        success: boolean;
-        [key: string]: any; // Add more fields as needed
-    };
-
     const onSubmit = async (data: SignUpFormData) => {
         try {
-            const result: SignUpResult = await signUpWithEmail(data);
-            if(result.success) router.push('/dashboard');
+            console.log('🔐 Attempting sign up...');
+            const result = await signUpWithEmail(data);
+            
+            DEBUG_AUTH.logAuth('sign-up', result.success, result.error);
+            console.log('🔐 Sign up result:', result);
+            
+            if(result.success) {
+                toast.success('Account created successfully!');
+                console.log('🔐 Redirecting to dashboard...');
+                // Force reload to ensure cookies are set
+                window.location.href = '/dashboard';
+            } else {
+                toast.error('Sign up failed', {
+                    description: result.error || 'Failed to create an account.'
+                });
+            }
         } catch (e) {
-            console.error(e);
+            console.error('🔐 Sign up error:', e);
+            DEBUG_AUTH.logAuth('sign-up', false, e);
             toast.error('Sign up failed', {
                 description: e instanceof Error ? e.message : 'Failed to create an account.'
             })

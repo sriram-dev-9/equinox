@@ -17,7 +17,7 @@ export const getAuth = async () => {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         database: mongodbAdapter(db as any),
         secret: process.env.BETTER_AUTH_SECRET,
-        baseURL: process.env.BETTER_AUTH_URL || process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000',
+        baseURL: process.env.BETTER_AUTH_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'),
         emailAndPassword: {
             enabled: true,
             disableSignUp: false,
@@ -27,6 +27,7 @@ export const getAuth = async () => {
             autoSignIn: true,
         },
         plugins: [nextCookies()],
+        trustedOrigins: process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : ['http://localhost:3000'],
     });
 
     return authInstance;

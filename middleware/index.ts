@@ -4,6 +4,11 @@ import { getSessionCookie } from "better-auth/cookies";
 export async function middleware(request: NextRequest) {
     const sessionCookie = getSessionCookie(request);
 
+    // Allow root path without auth
+    if (request.nextUrl.pathname === '/') {
+        return NextResponse.next();
+    }
+
     if (!sessionCookie) {
         return NextResponse.redirect(new URL("/", request.url));
     }
@@ -13,6 +18,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
     matcher: [
-        '/((?!api|_next/static|_next/image|favicon.ico|sign-in|sign-up|assets).*)',
+        '/((?!api|_next/static|_next/image|favicon.ico|sign-in|sign-up|assets|logo.svg).*)',
     ],
 };
