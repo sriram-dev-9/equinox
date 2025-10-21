@@ -4,7 +4,6 @@
 
 Equinox is an advanced stock market platform that combines real-time market data, AI-powered analysis, and comprehensive portfolio management tools to empower investors with intelligent insights and efficient trading capabilities.
 
-![Dashboard Preview](/public/assets/images/dashboard-preview.png)
 
 ## 🌟 Features
 
